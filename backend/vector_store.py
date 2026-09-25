@@ -1,24 +1,31 @@
+import shutil
+from pathlib import Path
+
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 
-from ingestion import load_and_split_pdf
+from ingestion import load_and_split_documents
 
 
-PDF_PATH = r"G:\enterprise-AI-knowledge-assistant\data\sample_company_handbook.pdf"
 VECTORSTORE_PATH = "vectorstore"
 
 
 def create_vector_store():
 
-    # 1. Load and split PDF
-    chunks = load_and_split_pdf(PDF_PATH)
+    # 1. Loading and spliting all documents
+    chunks = load_and_split_documents("data")
 
-    # 2. Load embedding model
+    # 2. Loading embedding model
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
 
-    # 3. Create Chroma vector database
+    # 3. Removing old vector store
+    if Path(VECTORSTORE_PATH).exists():
+        shutil.rmtree(VECTORSTORE_PATH)
+        print("Removed old vector store.")
+
+    # 4. Creating new Chroma vector database
     vector_store = Chroma.from_documents(
         documents=chunks,
         embedding=embeddings,

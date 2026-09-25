@@ -2,7 +2,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 
 
-VECTORSTORE_PATH = "../vectorstore"
+VECTORSTORE_PATH = "vectorstore"
 
 
 embeddings = HuggingFaceEmbeddings(
@@ -15,9 +15,9 @@ vector_store = Chroma(
 )
 
 
-query = "How many paid vacation days do employees get?"
+query = "What security measures are required for company laptops?"
 
-results = vector_store.similarity_search(query, k=3)
+results = vector_store.similarity_search(query, k=4)
 
 
 print("\nRelevant documents:\n")
