@@ -90,7 +90,7 @@ def ask_question(question: str):
 
 if __name__ == "__main__":
 
-    question = "How many vacation days do employees get?"
+    question = "What security measures are required for company laptops?"
 
     answer, documents = ask_question(question)
 
