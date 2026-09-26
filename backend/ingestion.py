@@ -3,14 +3,17 @@ from pathlib import Path
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-
-def load_and_split_documents(data_dir: str = "data"):
+def load_and_split_documents(data_dir: str | None = None):
     """
     Load all PDF documents from the data directory
     and split them into smaller chunks.
     """
 
-    data_path = Path(data_dir)
+    if data_dir is None:
+        base_dir = Path(__file__).resolve().parent.parent
+        data_path = base_dir / "data"
+    else:
+        data_path = Path(data_dir)
 
     all_documents = []
 

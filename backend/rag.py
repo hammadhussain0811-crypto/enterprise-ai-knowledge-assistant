@@ -1,5 +1,5 @@
 import os
-
+from pathlib import Path
 from dotenv import load_dotenv
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -9,7 +9,8 @@ from langchain_core.prompts import ChatPromptTemplate
 
 load_dotenv()
 
-VECTORSTORE_PATH = "vectorstore"
+BASE_DIR = Path(__file__).resolve().parent.parent
+VECTORSTORE_PATH = BASE_DIR / "vectorstore"
 
 
 # 1. Load embedding model
@@ -21,7 +22,7 @@ embeddings = HuggingFaceEmbeddings(
 # 2. Load existing vector DB
 
 vector_store = Chroma(
-    persist_directory=VECTORSTORE_PATH,
+    persist_directory=str(VECTORSTORE_PATH),
     embedding_function=embeddings
 )
 
