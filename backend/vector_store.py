@@ -1,11 +1,11 @@
 import shutil
 from pathlib import Path
-
-from langchain_huggingface import HuggingFaceEmbeddings
+from dotenv import load_dotenv
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_chroma import Chroma
 
 from ingestion import load_and_split_documents
-
+load_dotenv()
 # Project paths
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,9 +20,9 @@ def create_vector_store():
     # 1. Load and split all documents
     chunks = load_and_split_documents(str(DATA_PATH))
 
-    # 2. Load embedding model
-    embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    # 2. Use Gemini embeddings
+    embeddings = GoogleGenerativeAIEmbeddings(
+        model="gemini-embedding-2"
     )
 
     # 3. Remove old vector store
@@ -40,6 +40,7 @@ def create_vector_store():
     print(f"Stored {len(chunks)} chunks in ChromaDB.")
 
     return vector_store
+
 
 if __name__ == "__main__":
     create_vector_store()
