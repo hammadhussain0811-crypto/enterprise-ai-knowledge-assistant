@@ -15,6 +15,12 @@ vectorstore/
 # Uploaded/private documents
 data/*
 
+# Allow synthetic demo documents
+!data/sample_company_handbook.pdf
+!data/leave_policy.pdf
+!data/information_security_policy.pdf
+!data/expense_policy.pdf
+
 # Jupyter
 .ipynb_checkpoints/
 
